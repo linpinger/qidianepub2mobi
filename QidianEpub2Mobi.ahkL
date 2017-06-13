@@ -269,11 +269,12 @@ tip(msg="") {
 getQiDianEpubPage(html) {
 	RegExMatch(html, "smUi)<div class=""content"">(.*)</div>", xx_)
 	html := xx_1
+	html := LTrim(html, "`r`n ")
 	StringReplace, html, html, <p>手机用户请到m.qidian.com阅读。</p>, , A
 	StringReplace, html, html, <p>手机阅读器、看书更方便。【<a href="http://download.qidian.com/apk/QDReader.apk?k=e" target="_blank">安卓版</a>】</p>, , A
 	StringReplace, html, html, `r, , A
-	StringReplace, html, html, `n, , A
-	StringReplace, html, html, <p>, 　　, A
+	StringReplace, html, html, `n, <br/>`n, A
+	StringReplace, html, html, <p>, 　　, A ; 旧版
 	StringReplace, html, html, </p>, <br/>`n, A
 	return html
 }
